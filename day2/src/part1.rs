@@ -21,7 +21,6 @@ fn validate(data: &String) -> bool {
 
 pub fn get_n_valid() -> i32 {
     let mut sum = 0;
-    println!("Gunna read sum linez");
     if let Ok(lines) = read_lines("./day2/src/data.txt") {
         for line in lines {
             if let Ok(data) = line {
