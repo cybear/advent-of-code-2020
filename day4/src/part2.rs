@@ -107,11 +107,10 @@ fn validate(s: &str) -> bool {
     fields.pid;
 }
 
-fn main() {
-    let file = File::open("input.txt").unwrap();
+pub fn get_n_valid_ids() -> i32 {
+    let file = File::open("./day4/src/input.txt").unwrap();
     let reader = BufReader::new(file);
     let mut valid = 0;
-    let mut invalid = 0;
     let mut s = "".to_string();
     for (_index, line) in reader.lines().enumerate() {
         let line = line.unwrap();
@@ -119,10 +118,10 @@ fn main() {
         match empty_line {
             true => {
                 let is_valid = validate(&s);
-                match is_valid {
-                    true => valid = valid + 1,
-                    false => invalid = invalid + 1,
-                }
+                valid = valid + match is_valid {
+                    true => 1,
+                    false => 0,
+                };
                 s = "".to_string();
             },
             _ => s = format!("{} {}", s, line),
@@ -132,11 +131,10 @@ fn main() {
     if s.len() > 0 {
         println!("Almost missed the last entry");
         let is_valid = validate(&s);
-        match is_valid {
-            true => valid = valid + 1,
-            false => invalid = invalid + 1,
-        }
+        valid = valid + match is_valid {
+            true => 1,
+            false => 0,
+        };
     }
-    println!("Number of valid passports: {}", valid);
-    println!("Number of invalid passports: {}", invalid);
+    valid
 }
