@@ -16,16 +16,13 @@ fn validate(data: &String) -> bool {
             n = n + 1;
         }
     }
-    if n <= max_length && n >= min_length {
-    } else {
-        println!("req letter {}, req length {}-{}, found {}", required_char, min_length, max_length, n);
-    }
     return n <= max_length && n >= min_length;
 }
 
-fn main() {
+pub fn get_n_valid() -> i32 {
     let mut sum = 0;
-    if let Ok(lines) = read_lines("./data.txt") {
+    println!("Gunna read sum linez");
+    if let Ok(lines) = read_lines("./day2/src/data.txt") {
         for line in lines {
             if let Ok(data) = line {
                 let result = validate(&data);
@@ -34,9 +31,9 @@ fn main() {
                 }
             }
         }
-        println!("valid ones {}", sum);
+        return sum;
     }
-    
+    panic!("Can't read the lines!");
 }
 
 fn read_lines<P>(filename: P) -> io::Result<io::Lines<io::BufReader<File>>>

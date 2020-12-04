@@ -25,19 +25,17 @@ fn validate(data: &String) -> bool {
     let valid1 = is_char_at_position(required_char, position1, &password);
     let valid2 = is_char_at_position(required_char, position2, &password);
     if valid1 && valid2 {
-        println!("Too good: {:?} p{} p{} char {}", password, position1, position2, required_char);
         return false;
     }
     if !valid1 && !valid2 {
-        println!("Too bad: {:?} p{} p{} char {}", password, position1, position2, required_char);
         return false;
     }
     return true;
 }
 
-fn main() {
+pub fn get_n_valid() -> i32 {
     let mut sum = 0;
-    if let Ok(lines) = read_lines("./data.txt") {
+    if let Ok(lines) = read_lines("./day2/src/data.txt") {
         for line in lines {
             if let Ok(data) = line {
                 let result = validate(&data);
@@ -46,8 +44,9 @@ fn main() {
                 }
             }
         }
-        println!("valid ones {}", sum);
+        return sum;
     }
+    panic!("Can't read the lines!");
 }
 
 fn read_lines<P>(filename: P) -> io::Result<io::Lines<io::BufReader<File>>>
