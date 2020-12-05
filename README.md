@@ -41,7 +41,8 @@ These are some things I learned along the way.
 
 ## Day 5
 
-- To run just the package from day 5, use [https://doc.rust-lang.org/cargo/commands/cargo-run.html](`cargo run -p day5`).
+- To run just the package from day 5, use [`cargo run -p day5`](https://doc.rust-lang.org/cargo/commands/cargo-run.html).
 - You can write the unit tests at the bottom of the same file. Actually a pretty nice feature!
-- To get automatic feedback after each save, you can [https://crates.io/crates/cargo-watch](`cargo install cargo-watch`).
-- To import a file as a `utf-8` string, use the macro [https://doc.rust-lang.org/std/macro.include_str.html](`include_str!("input.txt")`)
+- To get automatic feedback after each save, you can [`cargo install cargo-watch`](https://crates.io/crates/cargo-watch).
+- To import a file as a `utf-8` string, use the macro [`include_str!("input.txt")`](https://doc.rust-lang.org/std/macro.include_str.html).
+
