@@ -34,7 +34,14 @@ These are some things I learned along the way.
 - Tried out `struct`. Easy enough so far.
 - Tried out `match`. I really like it and wish there was something similar in JavaScript.
 - Tried out some implicit returns. Visibly it's a useful distinction that it mustn't end with a semicolon.
+- I started using `cargo` to manage the following:
 - Added a "workspace" and migrated all days into "packages". Now I get all builds into the same folder. Neat.
 - From file-reading-fatigue I didn't look up a more practical way to read the file. I ended up doing an ugly workaround in the code instead.
 
 
+## Day 5
+
+- To run just the package from day 5, use [https://doc.rust-lang.org/cargo/commands/cargo-run.html](`cargo run -p day5`).
+- You can write the unit tests at the bottom of the same file. Actually a pretty nice feature!
+- To get automatic feedback after each save, you can [https://crates.io/crates/cargo-watch](`cargo install cargo-watch`).
+- To import a file as a `utf-8` string, use the macro [https://doc.rust-lang.org/std/macro.include_str.html](`include_str!("input.txt")`)
