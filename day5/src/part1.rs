@@ -4,23 +4,13 @@ pub fn calculate(s: &str) -> i32 {
 }
 
 fn get_seat_id(passport: &str) -> i32 {
-    let mut c_arr = passport.chars();
-    let mut y = 0;
-    let mut x = 0;
-    // Y
-    if c_arr.next().unwrap() == 'B' {y = y + 64;}
-    if c_arr.next().unwrap() == 'B' {y = y + 32;}
-    if c_arr.next().unwrap() == 'B' {y = y + 16;}
-    if c_arr.next().unwrap() == 'B' {y = y + 8;}
-    if c_arr.next().unwrap() == 'B' {y = y + 4;}
-    if c_arr.next().unwrap() == 'B' {y = y + 2;}
-    if c_arr.next().unwrap() == 'B' {y = y + 1;}
-    // X
-    if c_arr.next().unwrap() == 'R' {x = x + 4;}
-    if c_arr.next().unwrap() == 'R' {x = x + 2;}
-    if c_arr.next().unwrap() == 'R' {x = x + 1;}
-
-    y * 8 + x
+    let i_arr: Vec<i32> = passport.chars().map(
+        |x| match x {
+            'B' | 'R' => 1,
+            _ => 0,
+        }
+    ).collect();
+    i_arr.iter().fold(0, |acc, x| acc * 2 + x)
 }
 
 
