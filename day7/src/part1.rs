@@ -12,7 +12,6 @@ pub fn calculate(s: &str) -> usize {
             true => 1,
             false => 0,
         }).sum();
-    println!("result {:?}", result);
     result
 }
 
@@ -30,7 +29,7 @@ fn does_bag_contain(bags: &Vec<Bag>, container_bag_color: String, containing_bag
                 return does_bag_contain(bags, inside_color, containing_bag_color.clone());
             }
         }
-    ).any(|x| x == true)
+    ).any(|x| x)
 }
 
 fn line_to_bag(s: &str) -> Bag {
