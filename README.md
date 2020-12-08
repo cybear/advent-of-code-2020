@@ -52,3 +52,7 @@ These are some things I learned along the way.
 - I got to try out both `HashSet` and `HashMap` today
 - Being most proficient in JavaScript I have no understanding of where I need `&`, `&&`, `*` or `**`. Rustc is extremely forgiving and keeps correcting me until the code seems good. After which point it works. Magic?
 - `hashmap.entry(key)or_insert(0) += 1` was perfect for a histogram scenario. In JS I'd need to check for presence of the key and optionally setting it to 0 before adding 1 to it.
+
+
+# Day 7
+
