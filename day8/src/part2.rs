@@ -20,7 +20,7 @@ fn attempt_run(s: &str) -> i32 {
             if usize_i == instructions_len {
                 return sum;
             }
-            if usize_i < 0 {
+            if i < 0 {
                 break;
             }
             if instructions[usize_i].visited {
