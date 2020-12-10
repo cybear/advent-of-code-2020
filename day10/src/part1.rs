@@ -69,8 +69,8 @@ mod tests {
     fn test_solver() {
         assert_eq!(solve(&lib::parse_file(TESTDATA)), 7 * 5);
     }
-    // #[test]
-    // fn test_solver2() {
-    //     assert_eq!(solve(&lib::parse_file(TESTDATA2)), 22 * 10);
-    // }
+    #[test]
+    fn test_solver2() {
+        assert_eq!(solve(&lib::parse_file(TESTDATA2)), 22 * 10);
+    }
 }
