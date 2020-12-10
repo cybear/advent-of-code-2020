@@ -5,21 +5,11 @@ pub fn solve(data: Vec<lib::Adapter>) -> usize {
     // The last plug actually can perform 3j higher
     let mut steps_count = [0, 0, 0, 1];
     let iter = data.windows(2);
-
-    // wall hack
-    let wall: lib::Adapter = lib::parse_line("0");
-    let first_plug = &data[0];
-    let first_diff = get_joltage_step(&wall, first_plug);
-    steps_count[first_diff] += 1;
-    println!("steps_count yo {:?}", steps_count);
-    // end of wall hack
-
     let steps = iter.map(|x| {
         get_joltage_step(&x[0], &x[1])
     });
     steps.for_each(|step| steps_count[step] += 1);
-    println!("steps_count yo {:?}", steps_count);
-
+    println!("steps_count {:?}", steps_count);
     steps_count[1] * steps_count[3]
 }
 
@@ -27,7 +17,6 @@ fn get_joltage_step(first: &lib::Adapter, second: &lib::Adapter) -> usize {
     println!("comparing {} to {} = {}", first, second, second - first);
     second - first
 }
-
 
 #[cfg(test)]
 mod tests {

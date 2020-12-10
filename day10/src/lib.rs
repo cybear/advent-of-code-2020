@@ -28,6 +28,8 @@ pub fn parse_file(s: &str) -> Vec<Adapter> {
     let parsed_lines = lines.map(|l| parse_line(l));
     let mut vec: Vec<Adapter> = parsed_lines.collect();
     vec.sort();
+    // Wall plug hack
+    vec.insert(0, parse_line("0"));
     vec
 }
 
@@ -56,7 +58,7 @@ mod tests {
 
     #[test]
     fn test_parser() {
-        let expected: Vec<Adapter> = "1,4,5,6,7,10,11,12,15,16,19".split(",").map(|x|parse_line(x)).collect();
+        let expected: Vec<Adapter> = "0,1,4,5,6,7,10,11,12,15,16,19".split(",").map(|x|parse_line(x)).collect();
         assert_eq!(parse_file(TESTDATA), expected);
     }
 }
