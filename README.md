@@ -3,12 +3,9 @@
 Watch and laugh as I try out Rust for the first time.
 
 
-## Today I learned...
+# Notes ("Today I learned")
 
-These are some things I learned along the way.
-
-
-### Day 1
+## Day 1
 
 - You don't have to have a local dev environment, you can begin coding in the browser: [https://play.rust-lang.org](https://play.rust-lang.org)
 - It's preferred to avoid parens in the if clause: `if 1+1 == 2 {...}`
@@ -54,7 +51,7 @@ These are some things I learned along the way.
 - `hashmap.entry(key)or_insert(0) += 1` was perfect for a histogram scenario. In JS I'd need to check for presence of the key and optionally setting it to 0 before adding 1 to it.
 
 
-# Day 7
+## Day 7
 
 - First time using a `tuple`.
 
@@ -66,16 +63,26 @@ I was considering using something clever for the text parsing:
 At the end of the solution I just kept trying to fix whatever the compiler told me was wrong instead of thinking. There's a lot of things I am not so certain about, when should I `clone` a string and when should I lend it out? 
 
 
-# Day 8
+## Day 8
 
 I was quite pleased with my first attempt at making a `run()` function returning a `Result<i32,  &'static str>`. Then threw it out because of the following: I wanted a function to mutate the vector that was passed as an argument. But since the vector is borrowed that's not allowed. I tried various approaches and in the end I just gave up and made a big function containing everything.
 
 In part 2 I'm starting to understand a bit more about how to control flow in Rust. Even though I would have liked to break it up into more functions, I like how there's an outer `for` loop which controls which line to alter, then a `loop` for the actual program and it will `break` as soon as it has detected that the virtual program is stuck in a loop (or the next line is a negative number). Only if it correctly detects a solution it will return a number. If it can't find any solutions it will `panic`.
 
 
-# Day 9
+## Day 9
 
 - First time I got to use Option<T> :) I think that it fit quite well for this use case. A function which finds, or doesn't find something. 
 - Today I installed the Rust extension for VS Code. It includes the Rust Language Server. Pretty nice to get this level of support immediately in the editor. The only problem is that it keeps running and building all the time - the computer gets warm after just a few minutes. I might try switching to the other language server "rust-analyzer" tomorrow.
 - Trying out [TabNine autocomplete](https://marketplace.visualstudio.com/items?itemName=TabNine.tabnine-vscode) which seems to be a pretty good autocomplete! It's not just for Rust.
 
+
+## Day 10
+
+- I tried out a nice feature, `std::slice::Windows` which works great. But I guessed wrong, it was in fact the wrong tool for this solution (because of the wall also being connected to the first plug)
+- Finally understood how to share a lib file between my part1 and part2 files: `use super::lib;`
+- In my attempts at learning more Rust I didn't just settle for using a normal `usize` to represent each power plug. I implemented a `pub struct Adapter` which I then began working on:
+- I implemented subtraction for this Struct so that I can map out the difference between two plugs: `impl Sub for &Adapter`
+- I implemented Display for this Struct so that I can print just the number to the console: `impl fmt::Display for Adapter`
+- I derived `PartialEq, Eq, PartialOrd, Ord` for this Struct so that it can be sorted
+- I derived `Debug` because `assert_eq!` needs this
