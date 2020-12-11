@@ -4,7 +4,7 @@ pub fn solve(data: lib::Flight) -> usize {
     println!("solving Game of Flight");
     let mut flight = tick_flight(&data);
     loop {
-        let mut new_flight = tick_flight(&flight);
+        let new_flight = tick_flight(&flight);
         if new_flight == flight {
             return lib::get_all_occupied_seats(&flight);
         }
