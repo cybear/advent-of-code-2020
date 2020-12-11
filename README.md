@@ -103,13 +103,13 @@ For Rust I feel like it takes longer to test ideas when you're uncertain about t
 As a JavaScript / Typescript developer it's very different from how I normally work. Once I've written and saved a few lines of JS, there's no guarantee that this code will actually do anything meaningful in the browser. Most of the time it's not. For Typescript this is different in that I'll spend more time in the authoring phase in the editor until I can see that the types make sense, before I need to refresh the browser.
 This is kind of how it looks to me:
 
-% time spent
+### Time spent
 
 |            | Syntax and types | Checking whether "it works" |
 |------------|------------------|-----------------------------|
-| JavaScript | 1                | 99                          |
-| Typescript | 25               | 75                          |
-| Rust       | 99               | 1                           |
+| JavaScript | 1%               | 99%                         |
+| Typescript | 25%              | 75%                         |
+| Rust       | 99%              | 1%                          |
 
 
 One thing I want to try out is the use of `&self`, I feel like that would have been very natural today (if it works the way I assume). Now I keep passing `flight: &Flight` to all functions.
