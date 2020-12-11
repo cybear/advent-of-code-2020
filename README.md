@@ -79,7 +79,8 @@ In part 2 I'm starting to understand a bit more about how to control flow in Rus
 
 ## Day 10
 
-- I tried out a nice feature, `std::slice::Windows` which works great. But I guessed wrong, it was in fact the wrong tool for this solution (because of the wall also being connected to the first plug)
+- I tried out a nice feature, `std::slice::Windows` which works great. But it looked like the wrong tool for this solution (because of the wall also being connected to the first plug). To make it work I had to add 4 ugly lines of code.
+- Improved the aforementioned wall plug problem by `insert`ing a 0 in the start of the vector.
 - Finally understood how to share a lib file between my part1 and part2 files: `use super::lib;`
 - In my attempts at learning more Rust I didn't just settle for using a normal `usize` to represent each power plug. I implemented a `pub struct Adapter` which I then began working on:
 - I implemented subtraction for this Struct so that I can map out the difference between two plugs: `impl Sub for &Adapter`
