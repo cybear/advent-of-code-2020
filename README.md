@@ -87,3 +87,30 @@ In part 2 I'm starting to understand a bit more about how to control flow in Rus
 - I implemented Display for this Struct so that I can print just the number to the console: `impl fmt::Display for Adapter`
 - I derived `PartialEq, Eq, PartialOrd, Ord` for this Struct so that it can be sorted
 - I derived `Debug` because `assert_eq!` needs this
+
+With regards to problem solving the second part, I found the brute force solution quite quickly. I know that I can split the data into chunks every time that there's a gap of 3 - but I kind of lost the energy. Might revisit this later.
+
+## Day 11
+
+Yesterday I liked testing out the `trait`s and today I really could see their potential power.
+
+- You can implement a `trait` for `Display`. So the flight layout can be printed to the console in a beautiful way. The consumer doesn't need to know how, it's only a matter of `println!("{}", flight);`. The more complex your data structure the more useful this is.
+- You can implement `trait`s for equality comparison. So the consumer can write `if flight1 == flight2` and you have put the implementation of the deep comparison in your lib with the struct itself.
+- I'm not sure if `usize` is the right tool for these positions, since I constantly have to avoid going to -1 in any axis.
+
+For Rust I feel like it takes longer to test ideas when you're uncertain about the solution. When I've got a clearly defined problem (and that I've clearly understood) it's only a matter of taking small steps along TDD. Advent of Code is very well suited for this, since you get example data for each problem. Truly; when I had done the prep work of the `Struct Flight`, its logging formatter `impl fmt::Display for Flight`, its comparison traits `impl PartialEq for Flight` and `impl Eq for Flight {}` it was only a matter of writing unit tests and implementing the corresponding functions. My feeling is that once the tests based on the example data go through, it's very probable that the code works also for the input data from the site. 
+
+As a JavaScript / Typescript developer it's very different from how I normally work. Once I've written and saved a few lines of JS, there's no guarantee that this code will actually do anything meaningful in the browser. Most of the time it's not. For Typescript this is different in that I'll spend more time in the authoring phase in the editor until I can see that the types make sense, before I need to refresh the browser.
+This is kind of how it looks to me:
+
+% time spent
+
+|            | Syntax and types | Checking whether "it works" |
+|------------|------------------|-----------------------------|
+| JavaScript | 1                | 99                          |
+| Typescript | 25               | 75                          |
+| Rust       | 99               | 1                           |
+
+
+One thing I want to try out is the use of `&self`, I feel like that would have been very natural today (if it works the way I assume). Now I keep passing `flight: &Flight` to all functions.
+
