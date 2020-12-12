@@ -91,7 +91,6 @@ fn get_adjacent_positions(flight: &Flight, x:usize, y:usize) -> Vec<char> {
     let x_min = cmp::max(0, x.saturating_sub(1));
     let x_max = cmp::min(flight.x, x+2);
     for y_pos in y_min..y_max {
-        // let row: String = flight.layout[y_pos].iter().collect();
         for x_pos in x_min..x_max {
             let is_me = x_pos == x && y_pos == y;
             if !is_me {
@@ -101,6 +100,128 @@ fn get_adjacent_positions(flight: &Flight, x:usize, y:usize) -> Vec<char> {
     }
     adjacent_seats
 }
+
+fn look_chair_up(flight: &Flight, x:usize, y:usize) -> char {
+    if y == 0 {return 'X';}
+    let mut y_pos = y - 1;
+    while y_pos > 0 {
+        let pos = flight.layout[y_pos][x];
+        if pos == '#' || pos == 'L' {
+            return pos;
+        }
+        y_pos -= 1;
+    }
+    'X' // Did not find
+}
+fn look_chair_down(flight: &Flight, x:usize, y:usize) -> char {
+    if y >= flight.y {return 'X';}
+    let y_start = y + 1;
+    for y_pos in y_start..flight.y {
+        let pos = flight.layout[y_pos][x];
+        if pos == '#' || pos == 'L' {
+            return pos;
+        }
+    }
+    'X' // Did not find
+}
+fn look_chair_left(flight: &Flight, x:usize, y:usize) -> char {
+    if x == 0 {return 'X';}
+    let mut x_pos = x - 1;
+    while x_pos > 0 {
+        let pos = flight.layout[y][x_pos];
+        if pos == '#' || pos == 'L' {
+            return pos;
+        }
+        x_pos -= 1;
+    }
+    'X' // Did not find
+}
+fn look_chair_right(flight: &Flight, x:usize, y:usize) -> char {
+    if x >= flight.x {return 'X';}
+    let x_start = x + 1;
+    for x_pos in x_start..flight.x {
+        let pos = flight.layout[y][x_pos];
+        if pos == '#' || pos == 'L' {
+            return pos;
+        }
+    }
+    'X' // Did not find
+}
+fn look_chair_up_left(flight: &Flight, x:usize, y:usize) -> char {
+    if x == 0 || y == 0 {return 'X';}
+    let mut x_pos = x - 1;
+    let mut y_pos = y - 1;
+    while x_pos >= 0 && y_pos >= 0 {
+        let pos = flight.layout[y_pos][x_pos];
+        if pos == '#' || pos == 'L' {
+            return pos;
+        }
+        if x_pos == 0 || y_pos == 0 {return 'X';}
+        x_pos -= 1;
+        y_pos -= 1;
+    }
+    'X' // Did not find
+}
+fn look_chair_down_right(flight: &Flight, x:usize, y:usize) -> char {
+    if x >= flight.x || y >= flight.y {return 'X';}
+    let mut x_pos = x + 1;
+    let mut y_pos = y + 1;
+    while x_pos < flight.x && y_pos < flight.y {
+        let pos = flight.layout[y_pos][x_pos];
+        if pos == '#' || pos == 'L' {
+            return pos;
+        }
+        x_pos += 1;
+        y_pos += 1;
+    }
+    'X' // Did not find
+}
+fn look_chair_up_right(flight: &Flight, x:usize, y:usize) -> char {
+    if x >= flight.x || y == 0 {return 'X';}
+    let mut x_pos = x + 1;
+    let mut y_pos = y - 1;
+    while x_pos < flight.x && y_pos >= 0 {
+        // println!("{} {}", x_pos, y_pos);
+        let pos = flight.layout[y_pos][x_pos];
+        if pos == '#' || pos == 'L' {
+            return pos;
+        }
+        if y_pos == 0 {return 'X';}
+        x_pos += 1;
+        y_pos -= 1;
+    }
+    'X' // Did not find
+}
+fn look_chair_down_left(flight: &Flight, x:usize, y:usize) -> char {
+    if x == 0 || y >= flight.y {return 'X';}
+    let mut x_pos = x - 1;
+    let mut y_pos = y + 1;
+    while x_pos >= 0 && y_pos < flight.y {
+        let pos = flight.layout[y_pos][x_pos];
+        if pos == '#' || pos == 'L' {
+            return pos;
+        }
+        if x_pos == 0 {return 'X';}
+        x_pos -= 1;
+        y_pos += 1;
+    }
+    'X' // Did not find
+}
+
+pub fn look_all_chairs(flight: &Flight, x:usize, y:usize) -> usize {
+    let mut sum = 0;
+    if '#' == look_chair_up(flight, x, y) { sum += 1; }
+    if '#' == look_chair_up_right(flight, x, y) { sum += 1; }
+    if '#' == look_chair_right(flight, x, y) { sum += 1; }
+    if '#' == look_chair_down_right(flight, x, y) { sum += 1; }
+    if '#' == look_chair_down(flight, x, y) { sum += 1; }
+    if '#' == look_chair_down_left(flight, x, y) { sum += 1; }
+    if '#' == look_chair_left(flight, x, y) { sum += 1; }
+    if '#' == look_chair_up_left(flight, x, y) { sum += 1; }
+    sum
+}
+
+
 
 #[cfg(test)]
 mod tests {
@@ -167,5 +288,52 @@ L.LLLLL.LL";
         println!("Parsed {:?}", parsed);
         assert_eq!(parsed == parsed_same, true);
         assert_eq!(parsed == parsed_other, false);
+    }
+/*******************************************************************************/
+    #[test]
+    fn test_look_chair_up() {
+        let flight = parse_file(include_str!("tests/2example1.txt"));
+        assert_eq!(look_chair_up(&flight, 0, 0), 'X');
+        assert_eq!(look_chair_up(&flight, 0, 9), '#');
+        assert_eq!(look_chair_up(&flight, 3, 8), 'L');
+    }
+    #[test]
+    fn test_look_chair_down() {
+        let flight = parse_file(include_str!("tests/2example1.txt"));
+        assert_eq!(look_chair_down(&flight, 3, 9), 'X');
+        assert_eq!(look_chair_down(&flight, 0, 0), '#');
+        assert_eq!(look_chair_down(&flight, 3, 4), '#');
+    }
+    #[test]
+    fn test_look_chair_left() {
+        let flight = parse_file(include_str!("tests/2example1.txt"));
+        assert_eq!(look_chair_left(&flight, 3, 8), 'X');
+        assert_eq!(look_chair_left(&flight, 0, 0), 'X');
+        assert_eq!(look_chair_left(&flight, 5, 4), 'L');
+    }
+    #[test]
+    fn test_look_all_directions() {
+        let flight = parse_file(include_str!("tests/2example1.txt"));
+        assert_eq!(look_chair_up(&flight, 3, 4), '#', "up");
+        assert_eq!(look_chair_down(&flight, 3, 4), '#', "down");
+        assert_eq!(look_chair_left(&flight, 3, 4), '#', "left");
+        assert_eq!(look_chair_right(&flight, 3, 4), '#', "right");
+        assert_eq!(look_chair_up_left(&flight, 3, 4), '#', "up left");
+        assert_eq!(look_chair_up_right(&flight, 3, 4), '#', "up right");
+        assert_eq!(look_chair_down_left(&flight, 3, 4), '#', "down left");
+        assert_eq!(look_chair_down_right(&flight, 3, 4), '#', "down right");
+    }
+    #[test]
+    fn test_look_all_chairs1() {
+        let flight = parse_file(include_str!("tests/2example1.txt"));
+        assert_eq!(look_all_chairs(&flight, 3, 4), 8);
+    }
+    fn test_look_all_chairs2() {
+        let flight = parse_file(include_str!("tests/2example2.txt"));
+        assert_eq!(look_all_chairs(&flight, 1, 1), 1);
+    }
+    fn test_look_all_chairs3() {
+        let flight = parse_file(include_str!("tests/2example3.txt"));
+        assert_eq!(look_all_chairs(&flight, 3, 3), 0);
     }
 }
