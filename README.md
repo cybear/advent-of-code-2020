@@ -90,6 +90,7 @@ In part 2 I'm starting to understand a bit more about how to control flow in Rus
 
 With regards to problem solving the second part, I found the brute force solution quite quickly. I know that I can split the data into chunks every time that there's a gap of 3 - but I kind of lost the energy. Might revisit this later.
 
+
 ## Day 11
 
 Yesterday I liked testing out the `trait`s and today I really could see their potential power.
@@ -113,4 +114,21 @@ This is kind of how it looks to me:
 
 
 One thing I want to try out is the use of `&self`, I feel like that would have been very natural today (if it works the way I assume). Now I keep passing `flight: &Flight` to all functions.
+
+
+## Day 12
+
+- I realized how to avoid the VSCode Rust plugin building at 100% all of the time: In the workspace `Cargo.toml` I comment away all other days than today. That way it doesn't keep building the other ones. The root problem seems to be that this watcher process actually doesn't stop building and wait for changes. Instead it just keeps building in an eternal loop. I wonder if there's a simple fix to that that I'm just not aware of.
+- I miss the way that I can express a type in Typescript which is a union of several values like `type animal = "cat" | "dog"`. Now I've instead done a `match` where it catches any invalid inputs:
+```rust
+match instruction.direction {
+    'N' => y -= instruction.steps,
+    'S' => y += instruction.steps,
+    'E' => x += instruction.steps,
+    'W' => x -= instruction.steps,
+    _ => panic!("Unknown direction {}", instruction.direction),
+}
+```
+
+This day's Part 1 was a little easier than the last days, at least for me. I wonder if it's also because I've become more proficient in Rust?
 
