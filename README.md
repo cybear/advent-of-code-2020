@@ -132,3 +132,14 @@ match instruction.direction {
 
 This day's Part 1 was a little easier than the last days, at least for me. I wonder if it's also because I've become more proficient in Rust?
 
+
+## Day 13
+
+There's a lot of extra work that goes into describing exactly what you want to achieve to Rust. The premise is that you will be rewarded two great things:
+
+* The program will perform exactly as specified
+* It will be able to do it very fast
+
+The way I'm approaching problem solving is usually without a clear idea of the exact solution. I don't know exactly whether an object is better looking like this or like that. So for fast iterations and "stumbling", JS is certainly an easier language. 
+I imagine that for low-level programming, and for systems programming, it is a tool which can give huge benefits over its alternatives.
+It's of course possible that I'm still slower in Rust simply because I'm still a newbie at Rust and I've been writing JavaScript for over 20 years.
