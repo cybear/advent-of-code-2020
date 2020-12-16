@@ -10,8 +10,9 @@ impl fmt::Display for Instruction {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         write!(
             f,
-            "Address: {} Value: {}",
+            "Address: {}   Binary value: {:036b}   Value: {}",
             self.address,
+            self.value,
             self.value,
         )
     }
@@ -33,11 +34,14 @@ pub struct Program {
 impl fmt::Display for Program {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         let instructions_s: Vec<String> = self.instructions.iter().map(
-            |instruction| format!("Address: {} Value: {}", instruction.address, instruction.value)
+            |instruction| format!(
+                "Binary: {:036b}  Addr: {}   (dec: {})",
+                instruction.value, instruction.address, instruction.value
+            )
         ).collect();
         write!(
             f,
-            "Mask: {}\n{}",
+            "Mask:   {}\n{}",
             self.mask,
             instructions_s.join("\n"),
         )
@@ -98,6 +102,11 @@ pub fn parse_file(s: &str) -> Vec<Program> {
         ).collect::<Vec<Program>>()
 }
 
+fn apply_mask(mem: u64, mask: &str, value: u64) -> u64 {
+
+    mem
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -118,6 +127,11 @@ mem[8] = 0";
             ],
         };
         assert_eq!(notes[0], expected);
+    }
+    #[test]
+    fn test_binary() {
+        let instruction = Instruction {address: 8, value: 11};
+        assert_eq!(format!("{:036b}", instruction.value), "000000000000000000000000000000001011");
     }
     // #[test]
     // fn test_apply_mask() {
