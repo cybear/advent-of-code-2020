@@ -51,21 +51,23 @@ pub fn solve(data: Notes) -> usize {
     imminent_departure.number * imminent_departure.offset
 }
 
-pub fn parse_file(s: &str) -> Notes {
-    println!("parsing file {}", s);
-    let mut split = s.split("\n");
-    let earliest_depart: usize = split.next().unwrap().parse().unwrap();
-    let buses: Vec<usize> = split.next().unwrap().split(",")
-    .filter(|x| *x != "x")
-    .map(
-        |n| {
-            println!("n: {}", n);
-            n.parse().unwrap()
-        }
-    ).collect();
-    Notes {
-        earliest_depart,
-        buses,
+impl Notes {
+    pub fn new(s: &str) -> Notes {
+        println!("parsing file {}", s);
+        let mut split = s.split("\n");
+        let earliest_depart: usize = split.next().unwrap().parse().unwrap();
+        let buses: Vec<usize> = split.next().unwrap().split(",")
+        .filter(|x| *x != "x")
+        .map(
+            |n| {
+                println!("n: {}", n);
+                n.parse().unwrap()
+            }
+        ).collect();
+        Notes {
+            earliest_depart,
+            buses,
+        }    
     }
 }
 
@@ -77,7 +79,7 @@ mod tests {
 7,13,x,x,59,x,31,19";
     #[test]
     fn test_parse_file() {
-        let notes = parse_file(TESTDATA);
+        let notes = Notes::new(TESTDATA);
         let expected = Notes {
             earliest_depart: 939,
             buses: vec![7,13,59,31,19],
@@ -86,7 +88,7 @@ mod tests {
     }
     #[test]
     fn test_solver() {
-        let notes = parse_file(TESTDATA);
+        let notes = Notes::new(TESTDATA);
         assert_eq!(solve(notes), 295);
     }
 }
