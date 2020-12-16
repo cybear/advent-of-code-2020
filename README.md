@@ -145,7 +145,7 @@ I imagine that for low-level programming, and for systems programming, it is a t
 It's of course possible that I'm still slower in Rust simply because I'm still a newbie at Rust and I've been writing JavaScript for over 20 years.
 
 
-## Day 14
+## Day 14 through 16
 
 I don't know enough about bitwise operations to come up with a solution without spending a lot of time experimenting. Feeling an "Advent of Code in Rust" fatigue right now.
 
@@ -153,3 +153,6 @@ Some things I found out which I want to try if/when I get back into the groove a
 
 - Using methods belonging to a struct that can use `&Self` 
 - Using a constructor for a Struct so I can say `let foo = Import::new("filename.txt");`
+
+Edit: Hey, I actually did this last point for Day 13!
+
