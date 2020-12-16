@@ -143,3 +143,13 @@ There's a lot of extra work that goes into describing exactly what you want to a
 The way I'm approaching problem solving is usually without a clear idea of the exact solution. I don't know exactly whether an object is better looking like this or like that. So for fast iterations and "stumbling", JS is certainly an easier language. 
 I imagine that for low-level programming, and for systems programming, it is a tool which can give huge benefits over its alternatives.
 It's of course possible that I'm still slower in Rust simply because I'm still a newbie at Rust and I've been writing JavaScript for over 20 years.
+
+
+## Day 14
+
+I don't know enough about bitwise operations to come up with a solution without spending a lot of time experimenting. Feeling an "Advent of Code in Rust" fatigue right now.
+
+Some things I found out which I want to try if/when I get back into the groove again:
+
+- Using methods belonging to a struct that can use `&Self` 
+- Using a constructor for a Struct so I can say `let foo = Import::new("filename.txt");`
