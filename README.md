@@ -156,3 +156,13 @@ Some things I found out which I want to try if/when I get back into the groove a
 
 Edit: Hey, I actually did this last point for Day 13!
 
+
+## Day 14, stab 2
+
+I've taken some hiatus from the advent of code and now I'm feeling slightly more energized again. I don't know how much time I'll have in the next few days but I'll try to get a few more stars.
+
+I reread the instructions for Day 14 and I think I might not need the data structure that I've assembled, but let's see. Regarding what to use for the solving of this puzzle I think I'll need bitwise operations (AND for the 1:s and NOT for the 0:s?) and to generate the numbers I'll try `std::collections::BitVec`.
+
+Okay, now I found out that the BitVec has been moved out of `std` and into its own crate. 
+
+Okay, now I've given up on this approach - I had assumed it would be trivial to convert back and forth between a bit array and an u64, but it doesnt seem like it. If I understand it correctly this is because of Rust's memory safety. Gonna try to do operations on the u64 instead of using any crates for bit arrays / vectors.

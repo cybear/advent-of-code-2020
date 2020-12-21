@@ -2,6 +2,7 @@ use std::fmt;
 
 #[derive(Debug)]
 pub struct Instruction {
+    mask: Vec<char>,
     address: u64,
     value: u64,
 }
@@ -25,86 +26,70 @@ impl PartialEq for Instruction {
     }
 }
 
-#[derive(Debug)]
-pub struct Program {
-    mask: String,
-    instructions: Vec<Instruction>,
+pub fn solve(data: Vec<Instruction>) -> u64 {
+    data.iter().map(|x| x.value).sum()
 }
 
-impl fmt::Display for Program {
-    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        let instructions_s: Vec<String> = self.instructions.iter().map(
-            |instruction| format!(
-                "Binary: {:036b}  Addr: {}   (dec: {})",
-                instruction.value, instruction.address, instruction.value
-            )
-        ).collect();
-        write!(
-            f,
-            "Mask:   {}\n{}",
-            self.mask,
-            instructions_s.join("\n"),
-        )
-    }
-}
-impl PartialEq for Program {
-    fn eq(&self, other: &Self) -> bool {
-        if self.mask.ne(&other.mask) {
-            return false;
-        }
-        if self.instructions.len() != other.instructions.len() {
-            return false;
-        }
-        for x in 0..self.instructions.len() {
-            if self.instructions[x] != other.instructions[x] {
-                return false;
-            }
-        }
-        true
-    }
-}
-impl Eq for Program {}
-
-pub fn solve(data: Vec<Program>) -> usize {
-    data.iter().for_each(|program| println!("{}", program));
-    1
-}
-
-fn parse_instruction(s: &str) -> Instruction {
-    let mut split = s.split("] = ");
-    let address = split.next().unwrap()
-        .replace("mem[", "")
-        .replace("]", "")
-        .parse().unwrap();
-    let value = split.next().unwrap()
-        .parse().unwrap();
-    Instruction {
-        address,
-        value,
-    }
-}
-
-pub fn parse_file(s: &str) -> Vec<Program> {
+pub fn parse_file(s: &str) -> Vec<Instruction> {
+    let mut instructions = vec![];
+    let mut mask = vec![];
     println!("parsing file {}", s);
     s
-        .split("\nmask = ") // Only split on each item after the first line
-        .map(
-            |program_s| {
-                println!("Program {}", program_s);
-                let mut lines = program_s.lines();
-                let mask = lines.next().unwrap().replace("mask = ","").to_string(); // Clean the shit up
-                let instructions = lines.map(parse_instruction).collect();
-                Program {
-                    mask,
-                    instructions,
+        .lines()
+        .for_each(
+            |line| {
+                let prefix = &line[..4];
+                match prefix {
+                    "mask" => {
+                        mask = line[8..].to_string().chars().collect();
+                    },
+                    "mem[" => {
+                        let mut split = line.split("] = ");
+                        let address = split.next().unwrap()
+                            .replace("mem[", "")
+                            .replace("]", "")
+                            .parse().unwrap();
+                        let value = split.next().unwrap()
+                            .parse().unwrap();
+                        let mask = mask.clone();
+                        println!("Got something for ya, {} {}", address, value);
+                        instructions.push(Instruction {
+                            mask,
+                            address,
+                            value,
+                        });
+                    },
+                    _ => panic!("This bad yo: {}", prefix)
                 }
             }
-        ).collect::<Vec<Program>>()
+        );
+    instructions
 }
 
-fn apply_mask(mem: u64, mask: &str, value: u64) -> u64 {
-
-    mem
+fn apply_mask(instruction: Instruction) -> u64 {
+    let value = format!("{:036b}", instruction.value);
+    let two: u64 = 2;
+    let mut number: u64 = 0;
+    let ones = instruction.mask.iter().map(|c| match c {
+        'X' | '1' => 0,
+        '0' => 1,
+        _ => panic!("No such character: {}", c),
+    });
+    let zeroes = instruction.mask.iter().map(|c| match c {
+        'X' | '0' => 0,
+        '1' => 1,
+        _ => panic!("No such character: {}", c),
+    });
+    
+    for (index, c) in instruction.mask.iter().enumerate() {
+        let index64 = index as u32;
+        match c {
+            'X' => (),
+            '0' => number += two.pow(index64),
+            _ => panic!("No such char: {}", c),
+        }
+    }
+    number
 }
 
 #[cfg(test)]
@@ -115,28 +100,4 @@ mod tests {
 mem[8] = 11
 mem[7] = 101
 mem[8] = 0";
-    #[test]
-    fn test_parse_file() {
-        let notes = parse_file(TESTDATA);
-        let expected = Program {
-            mask: "XXXXXXXXXXXXXXXXXXXXXXXXXXXXX1XXXX0X".to_string(),
-            instructions: vec![
-                Instruction {address: 8, value: 11},
-                Instruction {address: 7, value: 101},
-                Instruction {address: 8, value: 0},
-            ],
-        };
-        assert_eq!(notes[0], expected);
-    }
-    #[test]
-    fn test_binary() {
-        let instruction = Instruction {address: 8, value: 11};
-        assert_eq!(format!("{:036b}", instruction.value), "000000000000000000000000000000001011");
-    }
-    // #[test]
-    // fn test_apply_mask() {
-    //     let notes = parse_file(TESTDATA);
-    //     let result = apply_mask(mem: u64, mask: &str, value: u64) -> u64
-    //     assert_eq!()
-    // }
 }
