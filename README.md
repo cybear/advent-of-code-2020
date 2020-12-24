@@ -156,3 +156,31 @@ Some things I found out which I want to try if/when I get back into the groove a
 
 Edit: Hey, I actually did this last point for Day 13!
 
+
+## Reflections on day 23
+
+I haven't found the time or energy to solve the last 10 days but I still got a few more insights while thinking about Rust.
+
+
+### Compiling Rust to WebAssembly
+
+- As a frontend developer, a natural place for Rust would be whenever I encounter a really "hot loop" in JavaScript where the code is doing something repetitive.
+- I'll now be able to make a little Rust application and generate WASM which I can use from JavaScript.
+- I'm excited about how I could unlock some more of my CPU:s amazing powers: utilize [SIMD](https://doc.rust-lang.org/edition-guide/rust-2018/simd-for-faster-computing.html); avoid garbage collection hiccups; perhaps even use multiple cores in parallel. These things are so different from the premises of JavaScript living in the browser.
+- I don't do much backend programming in Node anymore but I imagine that there are many use cases where it would be welcome to get the same advantages mentioned above.
+
+
+### New to Rust
+
+- I found a great podcast about Rust called [New Rustacean](https://newrustacean.com). Even if some episodes are a little older I recommend this podcast for some in-depth thourough break-down of several Rust concepts.
+- To Typescript developers who are curious about the differences between Rust and Typescript types, I can recommend **episode 12** from the above podcast. The subtitle is "Musings inspired by a project translating Typescript to Rust".
+- I can tell that Rust is getting traction now. This Advent of Code, several people around me have also started their Rust journey. [Martin Mazur](https://github.com/mazur/advent-of-code-2020/), [Gustav Nilsson Kotte](https://twitter.com/gustaf_nk/status/1339664353046519824) and more. 
+- Where did I learn my skills so far? The Rust official guide, book and reference were all useful. As I finished an AoC day I learned a lot from reading other peoples' solutions for the same day. But something very useful was a colleague at my client with experience in Rust reaching out and asking how he can help. 
+
+
+### How has Rust changed me?
+
+- Going back to my daily work in Typescript I think I will be much more aware of which functions that are allowed to make mutational changes and writing my code in a different way as a result.
+- I'll probably want to be even more clear about my types as I really like when the compiler can catch my mistakes when using them wrong.
+- I might even start doing a little TDD. I have tried it before, never got into it but with Rust it was such a natural fit.
+- I'll miss `trait`s, especially for comparison and Display. I do realize that it's not that hard to add methods to a JS class like `equals(other)`, `to_string()` etc. I do really admire how cleanly the abstractions work in Rust though.
